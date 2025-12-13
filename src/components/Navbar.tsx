@@ -68,6 +68,12 @@ export function Navbar() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button
+              variant="ghost"
+              onClick={() => scrollToSection("contact")}
+            >
+              Contact Me
+            </Button>
             <ThemeToggle />
           </div>
 
@@ -98,6 +104,12 @@ export function Navbar() {
                 {section.label}
               </button>
             ))}
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="block w-full text-left px-4 py-2 text-primary font-medium hover:bg-muted rounded-lg transition-colors"
+            >
+              Contact Me
+            </button>
           </div>
         </div>
       )}

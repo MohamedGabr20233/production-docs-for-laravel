@@ -47,7 +47,7 @@ const socialLinks: SocialLink[] = [
 
 export function SocialLinks() {
   return (
-    <footer className="bg-card border-t border-border py-16">
+    <footer id="contact" className="bg-card border-t border-border py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Hire Me Section */}
         <div className="text-center mb-12">
