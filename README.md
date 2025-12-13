@@ -1,73 +1,104 @@
-# Welcome to your Lovable project
+# Laravel Server Deployment Guide
 
-## Project info
+A comprehensive, interactive documentation website for deploying Laravel applications to production servers.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Live Demo
 
-## How can I edit this code?
+Visit the live site: [https://lologsol.github.io/shine-landing/](https://lologsol.github.io/shine-landing/)
 
-There are several ways of editing your application.
+## Overview
 
-**Use Lovable**
+This project provides step-by-step documentation for deploying Laravel projects to a production server, covering:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- PHP 8.2 / 8.3 installation and configuration
+- Nginx web server setup
+- MySQL database configuration
+- Composer installation
+- Let's Encrypt SSL certificates
+- PHP-FPM configuration
+- Laravel-specific optimizations
 
-Changes made via Lovable will be committed automatically to this repo.
+## Features
 
-**Use your preferred IDE**
+- Dark/Light theme toggle
+- Responsive design for all devices
+- Copy-to-clipboard code blocks
+- PHP version selector (8.2 / 8.3) - commands update dynamically
+- Smooth scroll navigation
+- SEO optimized
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Framework:** React 18 with TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui (Radix UI primitives)
+- **State Management:** Redux Toolkit
+- **Routing:** React Router DOM
+- **Icons:** Lucide React
 
-Follow these steps:
+## Getting Started
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Node.js 18+
+- npm or yarn
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Installation
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+# Clone the repository
+git clone https://github.com/lologsol/shine-landing.git
+
+# Navigate to project directory
+cd shine-landing
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Build for Production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+### Preview Production Build
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+npm run preview
+```
 
-## What technologies are used for this project?
+## Project Structure
 
-This project is built with:
+```
+src/
+├── components/       # React components
+│   ├── ui/          # shadcn/ui components
+│   ├── Navbar.tsx
+│   ├── HeroSection.tsx
+│   ├── DocumentationContent.tsx
+│   └── ...
+├── data/            # Documentation data
+├── pages/           # Page components
+├── store/           # Redux store
+├── hooks/           # Custom React hooks
+└── lib/             # Utility functions
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Deployment
 
-## How can I deploy this project?
+This project is configured for GitHub Pages deployment with automatic builds via GitHub Actions.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## License
 
-## Can I connect a custom domain to my Lovable project?
+MIT
 
-Yes, you can!
+## Author
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+**Lolog Sol**
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- GitHub: [@lologsol](https://github.com/lologsol)
