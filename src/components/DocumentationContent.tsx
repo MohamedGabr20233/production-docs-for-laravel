@@ -1,10 +1,42 @@
-import { AlertTriangle, Terminal, Globe, Database, Package, Github, Settings, Shield, CheckCircle, Server } from "lucide-react";
+import { AlertTriangle, Terminal, Globe, Database, Package, Github, Settings, Shield, CheckCircle, Server, Info } from "lucide-react";
 import { Section } from "./Section";
 import { CodeBlock } from "./CodeBlock";
+import { useAppSelector } from "@/store";
+import { selectPhpVersion } from "@/store/phpVersionSlice";
+import {
+  phpInstallCommands,
+  phpFpmStatusCheck,
+  phpFpmEnableStart,
+  nginxConfig,
+  versionNotes,
+  laravelCompatibility,
+} from "@/data/documentationData";
 
 export function DocumentationContent() {
+  const phpVersion = useAppSelector(selectPhpVersion);
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
+      {/* Version Info Banner */}
+      <div className="mb-8 p-4 bg-primary/5 rounded-xl border border-primary/20">
+        <div className="flex items-start gap-3">
+          <Info className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="font-semibold text-foreground mb-1">
+              PHP {phpVersion} Documentation
+            </p>
+            <p className="text-sm text-muted-foreground mb-2">
+              Compatible with: {laravelCompatibility[phpVersion]}
+            </p>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              {versionNotes[phpVersion].map((note, i) => (
+                <li key={i}>• {note}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {/* Important Notes */}
       <Section id="notes" title="Important Notes" icon={AlertTriangle} variant="warning">
         <div className="space-y-4">
@@ -22,7 +54,7 @@ export function DocumentationContent() {
             </li>
           </ol>
           <div className="mt-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
-            <p className="font-semibold text-primary mb-2">🧠 Why use migrations?</p>
+            <p className="font-semibold text-primary mb-2">Why use migrations?</p>
             <ul className="list-disc list-inside text-foreground space-y-1">
               <li>Laravel migrations can create the DB</li>
               <li>No hard-coding schema now</li>
@@ -56,35 +88,22 @@ export function DocumentationContent() {
           You should see: <code>Active: active (running)</code>
         </p>
         <p className="text-foreground">
-          Open <code>http://YOUR_SERVER_IP</code> in browser - you should see "Welcome to nginx" 🎉
+          Open <code>http://YOUR_SERVER_IP</code> in browser - you should see "Welcome to nginx"
         </p>
       </Section>
 
-      {/* PHP Installation */}
-      <Section id="php" title="3. PHP 8.3 Installation" icon={Server}>
+      {/* PHP Installation - Dynamic based on version */}
+      <Section id="php" title={`3. PHP ${phpVersion} Installation`} icon={Server}>
         <p className="text-foreground mb-4">Add PHP repository and update:</p>
         <CodeBlock code={`sudo apt install software-properties-common -y\nsudo add-apt-repository ppa:ondrej/php -y\nsudo apt update`} />
-        <p className="text-foreground mb-4">Install PHP 8.3 with required extensions:</p>
-        <CodeBlock
-          code={`sudo apt install -y \\
-  php8.3 \\
-  php8.3-fpm \\
-  php8.3-cli \\
-  php8.3-mysql \\
-  php8.3-xml \\
-  php8.3-curl \\
-  php8.3-mbstring \\
-  php8.3-zip \\
-  php8.3-gd \\
-  php8.3-bcmath \\
-  php8.3-intl`}
-        />
+        <p className="text-foreground mb-4">Install PHP {phpVersion} with required extensions:</p>
+        <CodeBlock code={phpInstallCommands[phpVersion]} />
         <p className="text-foreground mb-4">Verify PHP installation:</p>
         <CodeBlock code={`php -v`} />
         <p className="text-foreground mb-4">Ensure PHP-FPM is running:</p>
-        <CodeBlock code={`systemctl status php8.3-fpm`} />
+        <CodeBlock code={phpFpmStatusCheck[phpVersion]} />
         <p className="text-muted-foreground">
-          If not running: <code>sudo systemctl enable php8.3-fpm && sudo systemctl start php8.3-fpm</code>
+          If not running: <code>{phpFpmEnableStart[phpVersion]}</code>
         </p>
       </Section>
 
@@ -157,31 +176,13 @@ export function DocumentationContent() {
         <CodeBlock code={`php artisan key:generate\n\nsudo chown -R www-data:www-data storage bootstrap/cache\nsudo chmod -R 775 storage bootstrap/cache`} />
       </Section>
 
-      {/* Domain & DNS */}
+      {/* Domain & DNS - Dynamic Nginx config */}
       <Section id="domain" title="8. Nginx & Domain Configuration" icon={Globe}>
         <p className="text-foreground mb-4">Create Nginx site configuration:</p>
         <CodeBlock code={`sudo nano /etc/nginx/sites-available/app`} />
 
-        <p className="text-foreground mb-4">Add this configuration:</p>
-        <CodeBlock
-          code={`server {
-    listen 80;
-    server_name yourdomain.com www.yourdomain.com;
-    
-    root /var/www/app/public;
-    index index.php;
-    
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-    
-    location ~ \\.php$ {
-        include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
-    }
-}`}
-          language="nginx"
-        />
+        <p className="text-foreground mb-4">Add this configuration (note the PHP {phpVersion} FPM socket):</p>
+        <CodeBlock code={nginxConfig[phpVersion]} language="nginx" />
 
         <p className="text-foreground mb-4">Enable the site:</p>
         <CodeBlock code={`sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/\nsudo nginx -t\nsudo systemctl reload nginx`} />
@@ -240,7 +241,7 @@ export function DocumentationContent() {
       <Section id="final" title="10. Final Steps" icon={CheckCircle}>
         <p className="text-foreground mb-4">Run migrations and optimize:</p>
         <CodeBlock
-          code={`php artisan migrate --force\nphp artisan storage:link \n php artisan passport generate \\if you using passport library  \n php artisan passport:client --personal  \\if you using passport library \nphp artisan optimize`}
+          code={`php artisan migrate --force\nphp artisan storage:link\nphp artisan passport:keys  # if using Passport\nphp artisan passport:client --personal  # if using Passport\nphp artisan optimize`}
         />
 
         <p className="text-foreground mb-4">If optimization fails, fix permissions:</p>
@@ -261,9 +262,9 @@ export function DocumentationContent() {
         <p className="text-muted-foreground mb-4">Expected: Ports 80 and 443 should be listening.</p>
 
         <div className="mt-6 p-4 bg-green-500/10 rounded-lg border border-green-500/30">
-          <p className="font-semibold text-green-600 dark:text-green-400 mb-2">✅ Congratulations!</p>
+          <p className="font-semibold text-green-600 dark:text-green-400 mb-2">Congratulations!</p>
           <p className="text-foreground">
-            Your Laravel application should now be live at <code className="px-2 py-1 bg-muted rounded">https://yourdomain.com</code>
+            Your Laravel application with PHP {phpVersion} should now be live at <code className="px-2 py-1 bg-muted rounded">https://yourdomain.com</code>
           </p>
         </div>
       </Section>
