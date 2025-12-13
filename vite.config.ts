@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/shine-landing/",
+  base: mode === "production" ? "/production-docs-for-laravel/" : "/",
   server: {
     host: "::",
     port: 8080,
