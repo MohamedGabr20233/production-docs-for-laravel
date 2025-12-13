@@ -1,15 +1,4 @@
-import {
-  AlertTriangle,
-  Terminal,
-  Globe,
-  Database,
-  Package,
-  Github,
-  Settings,
-  Shield,
-  CheckCircle,
-  Server,
-} from "lucide-react";
+import { AlertTriangle, Terminal, Globe, Database, Package, Github, Settings, Shield, CheckCircle, Server } from "lucide-react";
 import { Section } from "./Section";
 import { CodeBlock } from "./CodeBlock";
 
@@ -24,13 +13,10 @@ export function DocumentationContent() {
           </p>
           <ol className="list-decimal list-inside space-y-3 text-foreground">
             <li>
-              To save a file after opening it with nano, press{" "}
-              <code className="px-2 py-1 bg-muted rounded text-sm">Ctrl + X</code> then{" "}
-              <code className="px-2 py-1 bg-muted rounded text-sm">Y</code> to apply changes
+              To save a file after opening it with nano, press <code className="px-2 py-1 bg-muted rounded text-sm">Ctrl + X</code> then <code className="px-2 py-1 bg-muted rounded text-sm">Y</code>{" "}
+              to apply changes
             </li>
-            <li>
-              Before installing SSL certificates, all HTTP links will show security warnings
-            </li>
+            <li>Before installing SSL certificates, all HTTP links will show security warnings</li>
             <li>
               <strong>Recommended:</strong> Don't create your database directly in MySQL. Use Laravel migrations instead for clean separation of concerns
             </li>
@@ -77,9 +63,7 @@ export function DocumentationContent() {
       {/* PHP Installation */}
       <Section id="php" title="3. PHP 8.3 Installation" icon={Server}>
         <p className="text-foreground mb-4">Add PHP repository and update:</p>
-        <CodeBlock
-          code={`sudo apt install software-properties-common -y\nsudo add-apt-repository ppa:ondrej/php -y\nsudo apt update`}
-        />
+        <CodeBlock code={`sudo apt install software-properties-common -y\nsudo add-apt-repository ppa:ondrej/php -y\nsudo apt update`} />
         <p className="text-foreground mb-4">Install PHP 8.3 with required extensions:</p>
         <CodeBlock
           code={`sudo apt install -y \\
@@ -118,9 +102,7 @@ export function DocumentationContent() {
       {/* Composer */}
       <Section id="composer" title="5. Install Composer" icon={Package}>
         <p className="text-foreground mb-4">Install Composer globally:</p>
-        <CodeBlock
-          code={`cd ~\ncurl -sS https://getcomposer.org/installer | php\nsudo mv composer.phar /usr/local/bin/composer`}
-        />
+        <CodeBlock code={`cd ~\ncurl -sS https://getcomposer.org/installer | php\nsudo mv composer.phar /usr/local/bin/composer`} />
         <p className="text-foreground mb-4">Verify installation:</p>
         <CodeBlock code={`composer --version`} />
       </Section>
@@ -151,17 +133,13 @@ export function DocumentationContent() {
           <strong>Step 4:</strong> Test connection:
         </p>
         <CodeBlock code={`ssh -T git@github.com`} />
-        <p className="text-muted-foreground">
-          Expected: "Hi USERNAME! You've successfully authenticated..."
-        </p>
+        <p className="text-muted-foreground">Expected: "Hi USERNAME! You've successfully authenticated..."</p>
       </Section>
 
       {/* Laravel Setup */}
       <Section id="laravel" title="7. Laravel Project Setup" icon={Settings}>
         <p className="text-foreground mb-4">Clone your repository:</p>
-        <CodeBlock
-          code={`sudo mkdir -p /var/www\nsudo chown $USER:$USER /var/www\ncd /var/www\ngit clone git@github.com:ORG/REPO.git app\ncd app`}
-        />
+        <CodeBlock code={`sudo mkdir -p /var/www\nsudo chown $USER:$USER /var/www\ncd /var/www\ngit clone git@github.com:ORG/REPO.git app\ncd app`} />
 
         <p className="text-foreground mb-4">Install dependencies:</p>
         <CodeBlock code={`composer install --no-dev --optimize-autoloader`} />
@@ -176,9 +154,7 @@ export function DocumentationContent() {
         />
 
         <p className="text-foreground mb-4">Generate app key and fix permissions:</p>
-        <CodeBlock
-          code={`php artisan key:generate\n\nsudo chown -R www-data:www-data storage bootstrap/cache\nsudo chmod -R 775 storage bootstrap/cache`}
-        />
+        <CodeBlock code={`php artisan key:generate\n\nsudo chown -R www-data:www-data storage bootstrap/cache\nsudo chmod -R 775 storage bootstrap/cache`} />
       </Section>
 
       {/* Domain & DNS */}
@@ -208,9 +184,7 @@ export function DocumentationContent() {
         />
 
         <p className="text-foreground mb-4">Enable the site:</p>
-        <CodeBlock
-          code={`sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/\nsudo nginx -t\nsudo systemctl reload nginx`}
-        />
+        <CodeBlock code={`sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/\nsudo nginx -t\nsudo systemctl reload nginx`} />
 
         <p className="text-foreground mb-4">
           <strong>DNS Setup:</strong> Add these records in your domain provider:
@@ -266,7 +240,7 @@ export function DocumentationContent() {
       <Section id="final" title="10. Final Steps" icon={CheckCircle}>
         <p className="text-foreground mb-4">Run migrations and optimize:</p>
         <CodeBlock
-          code={`php artisan migrate --force\nphp artisan storage:link\nphp artisan optimize`}
+          code={`php artisan migrate --force\nphp artisan storage:link \n php artisan passport generate \\if you using passport library  \n php artisan passport:client --personal  \\if you using passport library \nphp artisan optimize`}
         />
 
         <p className="text-foreground mb-4">If optimization fails, fix permissions:</p>
@@ -275,30 +249,21 @@ export function DocumentationContent() {
         />
 
         <p className="text-foreground mb-4">Add your user to www-data group:</p>
-        <CodeBlock
-          code={`sudo usermod -aG www-data YOUR_SSH_USER\nnewgrp www-data`}
-        />
+        <CodeBlock code={`sudo usermod -aG www-data YOUR_SSH_USER\nnewgrp www-data`} />
 
         <p className="text-foreground mb-4">Clear and re-optimize:</p>
-        <CodeBlock
-          code={`php artisan config:clear\nphp artisan cache:clear\nphp artisan view:clear\nphp artisan optimize`}
-        />
+        <CodeBlock code={`php artisan config:clear\nphp artisan cache:clear\nphp artisan view:clear\nphp artisan optimize`} />
 
         <p className="text-foreground mb-4">
           <strong>Final Verification:</strong>
         </p>
         <CodeBlock code={`sudo ss -tulnp | grep nginx`} />
-        <p className="text-muted-foreground mb-4">
-          Expected: Ports 80 and 443 should be listening.
-        </p>
+        <p className="text-muted-foreground mb-4">Expected: Ports 80 and 443 should be listening.</p>
 
         <div className="mt-6 p-4 bg-green-500/10 rounded-lg border border-green-500/30">
-          <p className="font-semibold text-green-600 dark:text-green-400 mb-2">
-            ✅ Congratulations!
-          </p>
+          <p className="font-semibold text-green-600 dark:text-green-400 mb-2">✅ Congratulations!</p>
           <p className="text-foreground">
-            Your Laravel application should now be live at{" "}
-            <code className="px-2 py-1 bg-muted rounded">https://yourdomain.com</code>
+            Your Laravel application should now be live at <code className="px-2 py-1 bg-muted rounded">https://yourdomain.com</code>
           </p>
         </div>
       </Section>
