@@ -99,6 +99,9 @@ MIT
 
 ## Author
 
-**Lolog Sol**
+**Mohamed Gbr**
 
-- GitHub: [@lologsol](https://github.com/lologsol)
+- GitHub: [@mohamedgbr]([https://github.com/lologsol](https://github.com/MohamedGabr20233/))
+- Gmail : mohamedgbr20233@gmail.com
+- tel : [+20 103 3058 554](https://wa.me/201033058554)
+- linkedin : [mohamedGbr](https://www.linkedin.com/in/mohamed-gbr-222776278/)
