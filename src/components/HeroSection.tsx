@@ -1,6 +1,9 @@
 import { ChevronDown } from "lucide-react";
+import { useSelector } from "react-redux";
+import { selectPhpVersion } from "@/store/phpVersionSlice";
 
 export function HeroSection() {
+  const phpVersion = useSelector(selectPhpVersion);
   const scrollToContent = () => {
     const element = document.getElementById("notes");
     if (element) {
@@ -37,7 +40,7 @@ export function HeroSection() {
         </p>
         
         <div className="flex flex-wrap justify-center gap-3 text-sm text-white/60 mb-12">
-          <span className="px-3 py-1 bg-white/10 rounded-full backdrop-blur-sm">PHP 8.3</span>
+          <span className="px-3 py-1 bg-white/10 rounded-full backdrop-blur-sm">PHP {phpVersion}</span>
           <span className="px-3 py-1 bg-white/10 rounded-full backdrop-blur-sm">Composer 2.9.2</span>
           <span className="px-3 py-1 bg-white/10 rounded-full backdrop-blur-sm">Nginx</span>
           <span className="px-3 py-1 bg-white/10 rounded-full backdrop-blur-sm">MySQL</span>
