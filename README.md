@@ -4,7 +4,7 @@ A comprehensive, interactive documentation website for deploying Laravel applica
 
 ## Live Demo
 
-Visit the live site: [https://lologsol.github.io/shine-landing/](https://lologsol.github.io/shine-landing/)
+Visit the live site: [https://MohamedGabr20233.github.io/production-docs-for-laravel/](https://MohamedGabr20233.github.io/production-docs-for-laravel/)
 
 ## Overview
 
