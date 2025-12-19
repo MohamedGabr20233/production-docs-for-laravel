@@ -10,6 +10,8 @@ import Index from "./pages/Index";
 import Troubleshooting from "./pages/Troubleshooting";
 import UsefulCommands from "./pages/UsefulCommands";
 import NotFound from "./pages/NotFound";
+import { IntegrationLayout } from "./layouts/IntegrationLayout";
+import { NotificationsPage } from "./pages/integration/Notifications";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,11 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/troubleshooting" element={<Troubleshooting />} />
               <Route path="/commands" element={<UsefulCommands />} />
+              {/* Integration routes with nested layout */}
+              <Route path="/integration" element={<IntegrationLayout />}>
+                <Route index element={null} />
+                <Route path="notifications" element={<NotificationsPage />} />
+              </Route>
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

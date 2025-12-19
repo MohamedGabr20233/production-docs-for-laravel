@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Server, Github, Linkedin, Mail, Phone, Facebook } from "lucide-react";
+import { Menu, X, ChevronDown, Server, Github, Linkedin, Mail, Phone, Facebook, Zap } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
@@ -115,6 +115,10 @@ export function Navbar() {
   const isActive = (path: string) => {
     if (path === "/") {
       return isHomePage;
+    }
+    // Handle integration routes - check if current path starts with /integration
+    if (path === "/integration") {
+      return pathname.includes("/integration");
     }
     // Handle paths with or without base path
     return pathname === path || pathname === `/shine-landing${path}` || pathname.endsWith(path);
@@ -236,6 +240,21 @@ export function Navbar() {
               </Button>
             </Link>
 
+            {/* Integration Link */}
+            <Link to="/integration">
+              <Button
+                variant="ghost"
+                className={
+                  isActive("/integration")
+                    ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20"
+                    : "text-blue-600 dark:text-blue-400 hover:bg-blue-500/10"
+                }
+              >
+                <Zap className="h-4 w-4 mr-1" />
+                Integration
+              </Button>
+            </Link>
+
             {/* Contact Me Dropdown */}
             <CustomDropdown
               align="end"
@@ -351,6 +370,20 @@ export function Navbar() {
             }`}
           >
             Useful Commands
+          </Link>
+
+          {/* Mobile Integration Link */}
+          <Link
+            to="/integration"
+            onClick={() => setMobileOpen(false)}
+            className={`flex items-center gap-2 w-full text-left px-4 py-2 rounded-lg transition-colors ${
+              isActive("/integration")
+                ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 font-medium"
+                : "text-blue-600 dark:text-blue-400 hover:bg-blue-500/10"
+            }`}
+          >
+            <Zap className="h-4 w-4" />
+            Integration
           </Link>
 
           {/* Mobile Contact Links */}
